@@ -1,0 +1,72 @@
+{% extends 'backend/index.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block breadcrump %} Sales Report {% endblock %}
+{% block contentmain %}
+
+
+<!--//grid-->
+<div class="graph">
+<div class="graph-grid">
+	<div class="col-md-12 graph-1">
+		<div class="grid-1">
+									<h4>SALES REPORT</h4>
+									<canvas id="bar1" height="500" width="1000" style="width: 1000px; height: 500px;"></canvas>
+									<script>
+										var barChartData = {
+											labels : {{days}},
+											datasets : [
+												{
+													fillColor : "#FBB03B",
+													strokeColor : "#FBB03B",
+													data : {{sal}}
+												},
+											]
+
+										};
+											new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
+									</script>
+								</div>
+	</div>
+
+		</div>
+			</div>
+		<div class="clearfix"> </div>
+
+
+		 <table class="table">
+			 <thead>
+			<tr>
+					<th>Customer</th>
+					<th>Total Amount</th>
+					<th>Order DateTime</th>
+					<th>Details</th>
+			</tr>
+			</thead>
+		                    <tbody>
+		                    {% for order in orders %}
+		                        <tr class="table-row">
+		                            <td class="table-text">
+		                            	<h6>{{ order.user }}</h6>
+		                                <p>{{ order.user.Email }}</p>
+		                            </td>
+		                            <td>
+		                            	<span class="fam">{{ order.totalamount }}</span>
+		                            </td>
+		                            <td class="march">
+		                               <h6>{{ order.checkout_date }}</h6>
+		                            </td>
+
+		                             <td >
+									 							 	<a href="{% url 'orderdet' pk=order.pk %}">View Details</a>
+
+		                            </td>
+		                        </tr>
+		                         {% endfor %}
+		                    </tbody>
+		                </table>
+
+{% endblock %}
